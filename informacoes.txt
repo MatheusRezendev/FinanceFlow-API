@@ -16,5 +16,3 @@ Criar API para gestão de gastos pessoais.
     2.4 - Criar um endpoint de fluxo de caixa.
         2.4.1 - Obter o total a pagar, total a receber, o saldo, a lista de titulos a pagar e
         a lista de titulos a receber, podendo filtar por periodo de vencimento.
-
-3 -
