@@ -29,7 +29,7 @@ public class Titulo {
             joinColumns = @JoinColumn(name = "idTitulo"),
             inverseJoinColumns = @JoinColumn(name = "idCentroDeCusto")
     )
-    private List<CentroDeCusto> centroDeCustos;
+    private List<CentroDeCusto> centrosDeCustos;
 
     @Column(columnDefinition = "TEXT")
     private String observacao;
@@ -72,11 +72,11 @@ public class Titulo {
     }
 
     public List<CentroDeCusto> getCentroDeCustos() {
-        return centroDeCustos;
+        return centrosDeCustos;
     }
 
     public void setCentroDeCustos(List<CentroDeCusto> centroDeCustos) {
-        this.centroDeCustos = centroDeCustos;
+        this.centrosDeCustos = centroDeCustos;
     }
 
     public String getObservacao() {

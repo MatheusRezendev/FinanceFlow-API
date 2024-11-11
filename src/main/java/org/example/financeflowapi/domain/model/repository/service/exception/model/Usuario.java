@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-public class Usuario implements UserDetails{
+public class Usuario implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idUsuario")
@@ -98,7 +98,6 @@ public class Usuario implements UserDetails{
         this.titulos = titulos;
     }
 
-    //#region Framework
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;

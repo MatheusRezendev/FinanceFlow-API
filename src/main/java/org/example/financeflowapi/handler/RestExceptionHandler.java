@@ -27,7 +27,7 @@ public class RestExceptionHandler {
         return new ResponseEntity<>(erro, HttpStatus.NOT_FOUND);                    //Retorna a exceção
     }
 
-    @ExceptionHandler(ResourceNotFoundException.class)
+    @ExceptionHandler(ResourceBadRequestException.class)
     public ResponseEntity<ErrorResposta> handleResourceBadRequestException(ResourceBadRequestException ex) {
 
         String dataHora = ConversorData.converterDateParaDataEHora(new Date());
@@ -40,7 +40,7 @@ public class RestExceptionHandler {
         return new ResponseEntity<>(erro, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(ResourceNotFoundException.class)
+    @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResposta> handleRequestException(Exception ex) {
 
         String dataHora = ConversorData.converterDateParaDataEHora(new Date());
