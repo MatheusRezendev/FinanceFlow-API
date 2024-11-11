@@ -14,6 +14,8 @@ public class UsuarioResponseDto {
 
     private Date dataInativacao;
 
+    private Date dataCadastro;
+
     public int getId() {
         return id;
     }
@@ -52,5 +54,13 @@ public class UsuarioResponseDto {
 
     public void setDataInativacao(Date dataInativacao) {
         this.dataInativacao = dataInativacao;
+    }
+
+    public Date getDataCadastro() {
+        return dataCadastro;
+    }
+
+    public void setDataCadastro(Date dataCadastro) {
+        this.dataCadastro = dataCadastro;
     }
 }

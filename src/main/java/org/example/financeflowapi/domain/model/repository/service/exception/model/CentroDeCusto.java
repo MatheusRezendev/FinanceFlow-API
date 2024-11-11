@@ -24,7 +24,7 @@ public class CentroDeCusto {
     @JoinColumn(name = "idUsuario")
     private Usuario usuario;
 
-    @ManyToMany(mappedBy = "centrodecusto")
+    @ManyToMany(mappedBy = "centrosDeCustos")
     @JsonBackReference
     private List<Titulo> titulos;
 
