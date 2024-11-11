@@ -1,5 +1,7 @@
 package org.example.financeflowapi.domain.model.repository.service.exception.service;
 
+import org.example.financeflowapi.domain.model.repository.service.exception.exception.ResourceBadRequestException;
+import org.example.financeflowapi.domain.model.repository.service.exception.exception.ResourceNotFoundException;
 import org.example.financeflowapi.domain.model.repository.service.exception.model.Usuario;
 import org.example.financeflowapi.domain.model.repository.service.exception.repository.UsuarioRepository;
 import org.example.financeflowapi.dto.usuario.titulo.centrodecusto.usuario.UsuarioRequestDto;
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,7 +42,7 @@ public class UsuarioService implements ICRUDService<UsuarioRequestDto, UsuarioRe
         Optional<Usuario> optUsuario = usuarioRepository.findById(id);
 
         if(optUsuario.isEmpty()){
-            //exception
+            throw new ResourceNotFoundException("Nao foi possivel encontrar o usuario com o ID: " + id);
         }
 
         return mapper.map(optUsuario.get(), UsuarioResponseDto.class);
@@ -47,16 +50,49 @@ public class UsuarioService implements ICRUDService<UsuarioRequestDto, UsuarioRe
 
     @Override
     public UsuarioResponseDto cadastrar(UsuarioRequestDto dto) {
-        return null;
+
+        validarUsuario(dto);
+
+        Usuario usuario = mapper.map(dto, Usuario.class);
+        //adicionar encoder na senha
+
+        usuario.setId(null);
+        usuario = usuarioRepository.save(usuario);
+
+        return mapper.map(usuario, UsuarioResponseDto.class);
     }
 
     @Override
     public UsuarioResponseDto atualizar(Long id, UsuarioRequestDto dto) {
-        return null;
+
+        UsuarioResponseDto usuarioBanco = obterPorId(id);
+        validarUsuario(dto);
+
+        Usuario usuario = mapper.map(dto, Usuario.class);
+        //adicionar encoder na senha
+
+        usuario.setId(id);
+        usuario.setDataInativacao(usuarioBanco.getDataInativacao());
+
+        usuario = usuarioRepository.save(usuario);
+        return mapper.map(usuario, UsuarioResponseDto.class);
     }
 
     @Override
     public void remover(Long id) {
 
+        UsuarioResponseDto usuarioEncontrado = obterPorId(id);
+
+        Usuario usuario = mapper.map(usuarioEncontrado, Usuario.class);
+
+        usuario.setDataInativacao(new Date());
+        usuarioRepository.save(usuario);
+    }
+
+    private void validarUsuario(UsuarioRequestDto dto) {
+
+        if(dto.getEmail() == null || dto.getSenha() == null){
+            throw new ResourceBadRequestException("E-mail e senha sao obrigatorios");
+        }
     }
 }
