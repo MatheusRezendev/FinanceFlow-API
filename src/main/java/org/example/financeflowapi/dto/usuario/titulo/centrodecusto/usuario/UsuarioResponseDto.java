@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class UsuarioResponseDto {
 
-    private int id;
+    private Long id;
 
     private String nome;
 
@@ -16,11 +16,11 @@ public class UsuarioResponseDto {
 
     private Date dataCadastro;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
