@@ -8,6 +8,7 @@ import org.example.financeflowapi.dto.usuario.titulo.centrodecusto.usuario.Usuar
 import org.example.financeflowapi.dto.usuario.titulo.centrodecusto.usuario.UsuarioResponseDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -23,6 +24,9 @@ public class UsuarioService implements ICRUDService<UsuarioRequestDto, UsuarioRe
 
     @Autowired
     private ModelMapper mapper;
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Override
     public List<UsuarioResponseDto> obterTodos() {
@@ -70,7 +74,8 @@ public class UsuarioService implements ICRUDService<UsuarioRequestDto, UsuarioRe
         }
 
         Usuario usuario = mapper.map(dto, Usuario.class);
-        //adicionar encoder na senha
+        String senha = passwordEncoder.encode(usuario.getSenha()); //encoder na senha
+        usuario.setSenha(senha);
 
         usuario.setId(null);
         usuario.setDataCadastro(new Date());
@@ -86,7 +91,9 @@ public class UsuarioService implements ICRUDService<UsuarioRequestDto, UsuarioRe
         validarUsuario(dto);
 
         Usuario usuario = mapper.map(dto, Usuario.class);
-        //adicionar encoder na senha
+
+        String senha = passwordEncoder.encode(dto.getSenha()); // encoder
+        usuario.setSenha(senha);
 
         usuario.setId(id);
         usuario.setDataInativacao(usuarioBanco.getDataInativacao());
